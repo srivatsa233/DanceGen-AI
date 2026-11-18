@@ -65,28 +65,40 @@ dance_moves = {
 }
 
 
-# Function to get moves based on style and difficulty
+# Get moves based on style and difficulty
 
 def get_moves(style, difficulty):
     return dance_moves[style][difficulty]
 
 
-# Function to generate the dance plan
+# Generate dance plan
 
 def generate_dance_plan(config):
 
     style = config["style"]
     difficulty = config["difficulty"]
+    energy = config["energy"]
 
     moves = get_moves(style, difficulty)
+
+    if energy == "low":
+        move_count = 1
+
+    elif energy == "medium":
+        move_count = 2
+
+    else:
+        move_count = len(moves)
+
+    selected_moves = moves[:move_count]
 
     plan = {
         "song": config["song"],
         "style": style,
-        "energy": config["energy"],
+        "energy": energy,
         "difficulty": difficulty,
         "duration": config["duration"],
-        "moves": moves
+        "moves": selected_moves
     }
 
     return plan
